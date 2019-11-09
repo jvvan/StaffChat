@@ -1,0 +1,6 @@
+staffchatprefix: '#'
+format: '&b[Staff Chat][{channel}] &r{displayname}&b: {message}'
+default_channel: 'default'
+channels:
+  - default
+  - admin

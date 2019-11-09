@@ -1,0 +1,24 @@
+name: StaffChat
+version: 1.1
+main: me.j122.StaffChat.main
+api-version: 1.13
+authors: [j122]
+description: Staff Chat
+softdepend: [PlaceholderAPI]
+commands:
+  staffchat:
+    description: Staff Chat
+    aliases: [sc]
+    usage: /<command> <message>
+  staffchatmode:
+    description: Staff Chat Mode
+    aliases: [scm]
+    usage: /<command>
+  staffchatchannel:
+    description: Staff Chat Channel
+    aliases: [scchannel, scc]
+    usage: /<command> <select/add/remove/setdefault> <channel>
+  staffchatreload:
+    description: Reload Staff Chat
+    aliases: [scr, screload]
+    usage: /<command>
