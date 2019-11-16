@@ -1,3 +1,5 @@
+config-version: '1.4'
+
 staffchatprefix: '#'
 format: '&b[Staff Chat][{channel}] &r{displayname}&b: {message}'
 default_channel: 'default'
