@@ -8,22 +8,24 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class StaffChatCommand implements CommandExecutor {
+    private main plugin;
     public StaffChatCommand(main Plugin) {
+        plugin = Plugin;
         Plugin.getCommand("staffchat").setExecutor(this);
     }
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if(!(sender instanceof Player)) {
-            sender.sendMessage("You can't use this commmand in console!");
+            sender.sendMessage(Utils.getMessage("command-player-only"));
             return true;
         }
         Player p = (Player) sender;
         if(!p.hasPermission("staffchat.send")) {
-            p.sendMessage(Utils.Chat("&cYou don't have permission to use this command!"));
+            p.sendMessage(Utils.getMessage("no-permissions"));
             return true;
         }
         if(args.length == 0) {
-            p.sendMessage(Utils.Chat("&cUsage: /staffchat <message>"));
+            p.sendMessage(Utils.getMessage("usages.staffchatcommand"));
             return true;
         }
 

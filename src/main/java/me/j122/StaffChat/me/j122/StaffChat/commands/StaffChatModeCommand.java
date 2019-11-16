@@ -17,20 +17,20 @@ public class StaffChatModeCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if(!(sender instanceof Player)) {
-            sender.sendMessage("You can't use this commmand in console!");
+            sender.sendMessage(Utils.getMessage("command-player-only"));
             return true;
         }
         Player p = (Player) sender;
         if (!p.hasPermission("staffchat.staffchatmode")) {
-            p.sendMessage(Utils.Chat("&cYou don't have permission to use this command!"));
+            p.sendMessage(Utils.getMessage("no-permissions"));
             return true;
         }
         if (Plugin.getPlayersInStaffChatMode().contains(p.getUniqueId())) {
             Plugin.getPlayersInStaffChatMode().remove(p.getUniqueId());
-            p.sendMessage(Utils.Chat("&aStaff Chat Mode is disabled!"));
+            p.sendMessage(Utils.getMessage("staffchatmode-disabled"));
         } else {
             Plugin.getPlayersInStaffChatMode().add(p.getUniqueId());
-            p.sendMessage(Utils.Chat("&aStaff Chat Mode is enabled!"));
+            p.sendMessage(Utils.getMessage("staffchatmode-enabled"));
         }
         return true;
     }

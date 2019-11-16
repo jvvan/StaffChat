@@ -1,9 +1,10 @@
 name: StaffChat
-version: 1.1
+version: 1.4
 main: me.j122.StaffChat.main
 api-version: 1.13
 authors: [j122]
 description: Staff Chat
+website: https://www.spigotmc.org/resources/staffchat-1-8-1-14.72484/
 softdepend: [PlaceholderAPI]
 commands:
   staffchat:
@@ -22,3 +23,7 @@ commands:
     description: Reload Staff Chat
     aliases: [scr, screload]
     usage: /<command>
+permissions:
+  staffchat.*:
+    description: Gives access to all staffchat commands
+    default: op

@@ -10,6 +10,10 @@ import java.util.List;
 import java.util.UUID;
 
 public class Utils {
+    public static void reload() {
+        main.plugin.reloadConfig();
+        main.plugin.loadYamls();
+    }
     public static void ConsoleMessage(String msg) {
         Bukkit.getServer().getConsoleSender().sendMessage(Utils.Chat(msg));
     }
@@ -36,7 +40,7 @@ public class Utils {
     public static void SendStaffChatMessage(Player p, String msg) {
         if(!channelExists(getPlayersChannel(p))) {
             setPlayersChannel(p, getDefaultChannel());
-            p.sendMessage(Utils.Chat("&cYou are in default channel because channel you were in was deleted!"));
+            p.sendMessage(Utils.getMessage("player-kicked-from-channel"));
         }
         String scmsg = Format(main.plugin.getConfig().getString("format"), p, msg);
         if(getPlayersChannel(p) == getDefaultChannel()) {
@@ -85,11 +89,14 @@ public class Utils {
         for(Object uuid : main.plugin.getPlayerChannels().keySet()) {
             if(getPlayersChannel(Bukkit.getPlayer((UUID) uuid)).equalsIgnoreCase(Channel)) {
                 setPlayersChannel(Bukkit.getPlayer((UUID) uuid), getDefaultChannel());
-                Bukkit.getPlayer((UUID) uuid).sendMessage(Utils.Chat("&cChannel you were in was deleted so you were put in default channel!"));
+                Bukkit.getPlayer((UUID) uuid).sendMessage(Utils.getMessage("channel-deleted-while-player-in"));
             }
         }
     }
     public static String getDefaultChannel() {
         return main.plugin.getConfig().getString("default_channel");
+    }
+    public static String getMessage(String msg) {
+        return Chat(main.plugin.getLang().getString(msg));
     }
 }

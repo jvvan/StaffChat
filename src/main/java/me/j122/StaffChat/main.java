@@ -3,6 +3,8 @@ package me.j122.StaffChat;
 import me.j122.StaffChat.me.j122.StaffChat.commands.StaffChatChannelCommand;
 import me.j122.StaffChat.me.j122.StaffChat.commands.StaffChatModeCommand;
 import me.j122.StaffChat.me.j122.StaffChat.commands.StaffChatReloadCommand;
+import org.bukkit.configuration.InvalidConfigurationException;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -11,6 +13,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 import me.j122.StaffChat.me.j122.StaffChat.commands.StaffChatCommand;
 import me.j122.StaffChat.me.j122.StaffChat.Utils.Utils;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.*;
 
 public final class main extends JavaPlugin implements Listener {
@@ -20,6 +25,8 @@ public final class main extends JavaPlugin implements Listener {
     public static Map<UUID, String> PlayerChannels = new HashMap<>();
     public ArrayList getPlayersInStaffChatMode() { return PlayersInStaffChatMode; }
     public Map getPlayerChannels() { return PlayerChannels; }
+    private File l = null;
+    private YamlConfiguration lang = new YamlConfiguration();
     @Override
     public void onEnable() {
         Utils.ConsoleMessage("&b[StaffChat] Enabling plugin version: "+ getDescription().getVersion());
@@ -37,8 +44,11 @@ public final class main extends JavaPlugin implements Listener {
         new StaffChatChannelCommand(this);
         new StaffChatReloadCommand(this);
         getServer().getPluginManager().registerEvents(this, this);
-        saveDefaultConfig();
         plugin = this;
+        saveDefaultConfig();
+        this.l = new File(getDataFolder(), "language.yml");
+        mkdir();
+        loadYamls();
     }
     @Override
     public void onDisable() {
@@ -60,6 +70,32 @@ public final class main extends JavaPlugin implements Listener {
             Player p = event.getPlayer();
             Utils.SendStaffChatMessage(p, event.getMessage());
             return;
+        }
+    }
+    private void mkdir(){
+        if (!this.l.exists()) {
+            saveResource("language.yml", false);
+        }
+    }
+
+    public void loadYamls(){
+        try {
+            lang.load(l);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InvalidConfigurationException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public YamlConfiguration getLang() { return this.lang; }
+    public void saveLang() {
+        try {
+            this.lang.save(this.l);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

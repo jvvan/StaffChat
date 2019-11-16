@@ -16,17 +16,17 @@ public class StaffChatReloadCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if(!(sender instanceof Player)) {
-            plugin.reloadConfig();
-            sender.sendMessage(Utils.Chat("&aConfig Reloaded!"));
+            Utils.reload();
+            sender.sendMessage(Utils.getMessage("config-reloaded"));
             return true;
         }
         Player p = (Player) sender;
         if(!p.hasPermission("staffchat.reload")) {
-            p.sendMessage(Utils.Chat("&cYou don't have permission to use this command!"));
+            p.sendMessage(Utils.getMessage("no-permissions"));
             return true;
         }
-        plugin.reloadConfig();
-        p.sendMessage(Utils.Chat("&aConfig Reloaded!"));
+        Utils.reload();
+        p.sendMessage(Utils.getMessage("config-reloaded"));
         return true;
     }
 }
